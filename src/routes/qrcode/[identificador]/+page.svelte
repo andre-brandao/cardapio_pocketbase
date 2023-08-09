@@ -45,6 +45,7 @@
         };
         pb.collection("pedidos_pousada").create(data);
         console.log("pedido criado");
+        alert("Pedido criado com sucesso");
     }
 </script>
 
