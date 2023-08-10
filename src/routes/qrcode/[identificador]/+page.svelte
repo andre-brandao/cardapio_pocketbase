@@ -42,11 +42,15 @@
             cliente: $currentUser.id,
             produto: produto.id,
             status: "pendente",
+            local_consumo: localConsumo,
         };
+        localConsumo = '';
         pb.collection("pedidos_pousada").create(data);
         console.log("pedido criado");
         alert("Pedido criado com sucesso");
     }
+
+    let localConsumo = "";
 </script>
 
 <Cardapio on:produto_selecionado={selecionar_produto} />
@@ -56,7 +60,45 @@
     <Modal bind:showModal>
         <h2 slot="header">Produto</h2>
         <BigCardProduto {produto} />
-        <button on:click={novo_pedido}> Confirmar Pedido </button>
+        <div class="local-consumo">
+            <h3>Onde deseja Consumir o Pedido</h3>
+            <label>
+                <input
+                    class="radio"
+                    type="radio"
+                    bind:group={localConsumo}
+                    value="Restaurante"
+                />
+                Restaurante
+            </label>
+            <label>
+                <input
+                    class="radio"
+                    type="radio"
+                    bind:group={localConsumo}
+                    value="Quarto"
+                />
+                Quarto
+            </label>
+        </div>
+        <button
+            class="confirmar"
+            disabled={localConsumo.length === 0}
+            on:click={novo_pedido}
+        >
+            Confirmar Pedido
+        </button>
     </Modal>
-
 {/if}
+
+<style>
+   .confirmar{
+         background-color: #2ecc71;
+         color: white;
+         border: none;
+         padding: 10px;
+         border-radius: 5px;
+         font-size: 1.2rem;
+         margin-top: 10px;
+   }
+</style>

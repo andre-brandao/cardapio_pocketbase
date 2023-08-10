@@ -3,6 +3,7 @@
     export let cliente = '';
     export let status = '';
     export let created = '';
+    export let local_consumo = '';
 
     $: formatedDate = new Date(created).toLocaleString('pt-BR', { timeZone: 'UTC' }).split(' ')[1];
 </script>
@@ -19,13 +20,18 @@
 
 <style>
 
-    .pendente{
+
+
+    .Pendente{
         color: red;
     }
-    .confirmado{
+    .Confirmado{
         color: green;
     }
-    .cancelado{
+    .Cancelado{
         color: gray;
+    }
+    .Preparando{
+        color: orange;
     }
 </style>

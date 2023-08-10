@@ -4,8 +4,7 @@
 
 export enum Collections {
 	ChatPousada = "chat_pousada",
-	PedidoPousada = "pedido_pousada",
-	Pedidov2Pousada = "pedidov2_pousada",
+	PedidosPousada = "pedidos_pousada",
 	ProdutosPousada = "produtos_pousada",
 	Users = "users",
 }
@@ -40,18 +39,11 @@ export type ChatPousadaRecord = {
 	text: string
 }
 
-export type PedidoPousadaRecord = {
+export type PedidosPousadaRecord = {
+	cliente: RecordIdString
 	produto: RecordIdString
-	user: RecordIdString
-	confirmado?: boolean
-	cancelado?: boolean
-}
-
-export type Pedidov2PousadaRecord = {
-	user?: RecordIdString
-	produto: RecordIdString
-	unidade: string
 	status: string
+	local_consumo?: string
 }
 
 export type ProdutosPousadaRecord = {
@@ -69,12 +61,13 @@ export type ProdutosPousadaRecord = {
 export type UsersRecord = {
 	name?: string
 	avatar?: string
+	unidade?: string
+	observacao?: string
 }
 
 // Response types include system fields and match responses from the PocketBase API
 export type ChatPousadaResponse<Texpand = unknown> = Required<ChatPousadaRecord> & BaseSystemFields<Texpand>
-export type PedidoPousadaResponse<Texpand = unknown> = Required<PedidoPousadaRecord> & BaseSystemFields<Texpand>
-export type Pedidov2PousadaResponse<Texpand = unknown> = Required<Pedidov2PousadaRecord> & BaseSystemFields<Texpand>
+export type PedidosPousadaResponse<Texpand = unknown> = Required<PedidosPousadaRecord> & BaseSystemFields<Texpand>
 export type ProdutosPousadaResponse<Texpand = unknown> = Required<ProdutosPousadaRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -82,16 +75,14 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 
 export type CollectionRecords = {
 	chat_pousada: ChatPousadaRecord
-	pedido_pousada: PedidoPousadaRecord
-	pedidov2_pousada: Pedidov2PousadaRecord
+	pedidos_pousada: PedidosPousadaRecord
 	produtos_pousada: ProdutosPousadaRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
 	chat_pousada: ChatPousadaResponse
-	pedido_pousada: PedidoPousadaResponse
-	pedidov2_pousada: Pedidov2PousadaResponse
+	pedidos_pousada: PedidosPousadaResponse
 	produtos_pousada: ProdutosPousadaResponse
 	users: UsersResponse
 }

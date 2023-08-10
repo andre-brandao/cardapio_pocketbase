@@ -1,20 +1,19 @@
-<script>
+<script lang="ts">
     import { createEventDispatcher, onDestroy, onMount } from "svelte";
-    import { currentUser, pb } from "./pocketbase";
-    import CardPedidos from "./cards/CardPedidos.svelte";
+    import { currentUser, pb } from "../pocketbase";
+    import CardPedidos from "../cards/CardPedidos.svelte";
 
     export let cliente = "";
 
-    const dispatch = createEventDispatcher();
-
-    /**
-     * @type {{ id: string; 
-    //@ts-ignore
-    produto: any; 
-    //@ts-ignore
-    cliente: any; status: any; created: string; }[]}
-     */
-    let pedidos = [];
+    let pedidos: {
+        id: string;
+        //@ts-ignore
+        produto: any;
+        //@ts-ignore
+        cliente: any;
+        status: any;
+        created: string;
+    }[] = [];
 
     async function getPedidos() {
         const date = new Date().toISOString().split("T")[0] + " 00:00:00";
@@ -44,7 +43,6 @@
                 //@ts-ignore
                 cliente: pedido.expand?.cliente.username,
                 status: pedido.status,
-                local_consumo: pedido.local_consumo,
                 created: pedido.created,
             };
         });
@@ -62,24 +60,56 @@
     onDestroy(() => {
         pb.collection("pedidos_pousada").unsubscribe();
     });
+
+    function confirmarPedido(id: string) {
+        pb.collection("pedidos_pousada").update(id, {
+            status: "Confirmado",
+        });
+    }
+
+    function emPreparoPedido(id: string) {
+        pb.collection("pedidos_pousada").update(id, {
+            status: "Preparando",
+        });
+    }
+
+    function cancelarPedido(id: string) {
+        pb.collection("pedidos_pousada").update(id, {
+            status: "Cancelado",
+        });
+    }
+    function deletarPedido(id: string) {
+        pb.collection("pedidos_pousada").delete(id);
+    }
 </script>
 
 <main>
     <div class="wrap-pedidos">
         {#each pedidos ?? [] as pedido}
-            <button
-                class="but-pedido"
-                on:click={() => {
-                    dispatch("pedido_selecionado", pedido);
-                }}
-            >
+            <div class="pedido">
                 <CardPedidos
                     produto={pedido.produto}
                     cliente={pedido.cliente}
                     status={pedido.status}
                     created={pedido.created}
                 />
-            </button>
+                <button
+                    class="confirmar"
+                    on:click={() => confirmarPedido(pedido.id)}>✅</button
+                >
+                <button
+                    class="em-preparo"
+                    on:click={() => emPreparoPedido(pedido.id)}>🍲</button
+                >
+                <button
+                    class="cancelar"
+                    on:click={() => cancelarPedido(pedido.id)}>❌</button
+                >
+                <button
+                    class="deletar"
+                    on:click={() => deletarPedido(pedido.id)}>🗑️</button
+                >
+            </div>
         {/each}
     </div>
 </main>
@@ -89,5 +119,19 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         grid-gap: 20px;
+    }
+
+    .pedido {
+        border-radius: 8px;
+        border: 1px solid transparent;
+        font-size: 1em;
+        font-weight: 500;
+        font-family: inherit;
+        background-color: #3f007a;
+        transition: border-color 0.25s;
+    }
+
+    .pedido > button {
+        font-size: 30px;
     }
 </style>
