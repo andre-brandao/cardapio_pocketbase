@@ -13,7 +13,7 @@
 
     <!-- header -->
     {#if $currentUser}
-        <h3>Hi, {$currentUser.username}</h3>
+        <h3>Olá, {$currentUser.username}</h3>
     {/if}
 </main>
 

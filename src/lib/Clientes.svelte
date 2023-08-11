@@ -46,7 +46,7 @@
     <div class="wrap-clientes">
         <button
             on:click={() => (showModalCriarCliente = true)}
-            class="criar-cliente">Cadastrar Cliente</button
+            class="criar-cliente">Nova Comanda</button
         >
         {#each clientes as cliente}
             <a href="/admin/infocliente/{cliente.id}">

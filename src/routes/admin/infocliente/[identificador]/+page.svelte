@@ -12,7 +12,11 @@
     export let data: PageData;
 
     let cliente: UsersResponse;
-    let pedidos: string | any[] = [];
+    let pedidos: any[] = [];
+
+    $:total = pedidos.reduce((acc, pedido) => {
+        return acc + pedido.preco;
+    }, 0);
 
     async function getCliente() {
         const cliente_id = data.identificador;
@@ -40,13 +44,15 @@
                 //@ts-ignore
                 produto: pedido.expand?.produto.nome,
                 //@ts-ignore
+                preco: pedido.expand?.produto.preco,
+                //@ts-ignore
                 cliente: pedido.expand?.cliente.username,
                 status: pedido.status,
                 created: pedido.created,
                 local_consumo:pedido.local_consumo,
             };
         });
-
+        console.log(results);
         return results;
     }
 
@@ -61,16 +67,23 @@
         <div class="info-cliente">
             <h1>Cliente: {cliente.username}</h1>
             <QrCodeLogin value={"http://localhost:5173/qrcode/"+cliente.username}/>
-            <h2>Pedidos</h2>
+            <div class="flex">
+
+                <h2>Pedidos</h2>
+                <h2>Total: R${total.toFixed(2)}</h2>
+
+            </div>
+            
 
         </div>
         <div class="wrap-pedidos">
-            {#each pedidos ?? [] as pedido}
+            {#each pedidos ?? [] as pedido (pedido.id)}
                 <div class="pedido">
                     <!-- <p>Produto: {pedido.produto}</p> -->
                     <CardPedidos
                     created={pedido.created}
                     produto={pedido.produto}
+                    preco={pedido.preco}
                     local_consumo={pedido.local_consumo}
                     />
                 </div>
@@ -89,5 +102,10 @@
 
     .pedido{
         background-color: rgb(143, 143, 143);
+    }
+
+    .flex{
+        display: flex;
+        justify-content: space-between;
     }
 </style>

@@ -6,6 +6,7 @@
     export let cliente = "";
 
     let pedidos: {
+        unidade: string;
         id: string;
         //@ts-ignore
         produto: any;
@@ -35,15 +36,6 @@
 
         const results = response.map((pedido) => {
 
-            let localConsumo = "";
-            if(pedido.local_consumo === "Quarto"){
-                // @ts-ignore
-                localConsumo = pedido.expand?.cliente.unidade;
-                
-            }else{
-                localConsumo = pedido.local_consumo;
-            }
-
 
             return {
                 id: pedido.id,
@@ -51,9 +43,12 @@
                 produto: pedido.expand?.produto.nome,
                 //@ts-ignore
                 cliente: pedido.expand?.cliente.username,
+                //@ts-ignore
+                unidade: pedido.expand?.cliente.unidade,
+                
                 status: pedido.status,
                 created: pedido.created,
-                local_consumo: localConsumo,
+                local_consumo: pedido.local_consumo,
             };
         });
 
@@ -73,7 +68,7 @@
 
     function confirmarPedido(id: string) {
         pb.collection("pedidos_pousada").update(id, {
-            status: "Confirmado",
+            status: "Entregue",
         });
     }
 
@@ -100,6 +95,7 @@
                 <CardPedidos
                     produto={pedido.produto}
                     cliente={pedido.cliente}
+                    unidade={pedido.unidade}
                     status={pedido.status}
                     created={pedido.created}
                     local_consumo={pedido.local_consumo}
