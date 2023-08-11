@@ -88,6 +88,7 @@
 <style>
     .nome-categoria {
         text-align: center;
+        font-size: 30px;
     }
     .fora_estoque {
         opacity: 0.1;

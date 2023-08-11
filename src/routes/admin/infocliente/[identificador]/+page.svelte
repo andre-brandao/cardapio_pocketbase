@@ -7,6 +7,7 @@
     } from "$lib/pocketbase-types";
     import { onMount } from "svelte";
     import type { PageData } from "./$types";
+    import QrCodeLogin from "$lib/admin/QRCodeLogin.svelte";
 
     export let data: PageData;
 
@@ -59,7 +60,9 @@
     <main>
         <div class="info-cliente">
             <h1>Cliente: {cliente.username}</h1>
+            <QrCodeLogin value={"http://localhost:5173/qrcode/"+cliente.username}/>
             <h2>Pedidos</h2>
+
         </div>
         <div class="wrap-pedidos">
             {#each pedidos ?? [] as pedido}
@@ -85,6 +88,6 @@
     }
 
     .pedido{
-        background-color: blue;
+        background-color: rgb(143, 143, 143);
     }
 </style>
