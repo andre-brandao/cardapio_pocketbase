@@ -14,7 +14,8 @@
 <main>
     <h3>{formatedDate}</h3>
     <h1>{produto}</h1>
-    <h1>{cliente}</h1>
+    <h1>{cliente} </h1>
+    <h2>{local_consumo}</h2>
     <h1 class={status}>{status}</h1>
 </main>
 

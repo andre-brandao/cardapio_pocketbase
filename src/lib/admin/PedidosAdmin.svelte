@@ -10,10 +10,8 @@
         //@ts-ignore
         produto: any;
         //@ts-ignore
-        cliente: any;
-        status: any;
-        created: string;
-    }[] = [];
+        cliente: any; status: any; created: string; local_consumo: string;
+    }[]= [];
 
     async function getPedidos() {
         const date = new Date().toISOString().split("T")[0] + " 00:00:00";
@@ -36,6 +34,17 @@
         }
 
         const results = response.map((pedido) => {
+
+            let localConsumo = "";
+            if(pedido.local_consumo === "Quarto"){
+                // @ts-ignore
+                localConsumo = pedido.expand?.cliente.unidade;
+                
+            }else{
+                localConsumo = pedido.local_consumo;
+            }
+
+
             return {
                 id: pedido.id,
                 //@ts-ignore
@@ -44,6 +53,7 @@
                 cliente: pedido.expand?.cliente.username,
                 status: pedido.status,
                 created: pedido.created,
+                local_consumo: localConsumo,
             };
         });
 
@@ -92,6 +102,7 @@
                     cliente={pedido.cliente}
                     status={pedido.status}
                     created={pedido.created}
+                    local_consumo={pedido.local_consumo}
                 />
                 <button
                     class="confirmar"
@@ -127,8 +138,9 @@
         font-size: 1em;
         font-weight: 500;
         font-family: inherit;
-        background-color: #3f007a;
+        background-color: #d4d4d4;
         transition: border-color 0.25s;
+        padding: 0px 0px 20px 20px;
     }
 
     .pedido > button {

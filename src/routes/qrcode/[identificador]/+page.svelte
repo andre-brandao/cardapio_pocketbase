@@ -41,10 +41,10 @@
             // @ts-ignore
             cliente: $currentUser.id,
             produto: produto.id,
-            status: "pendente",
+            status: "Pendente",
             local_consumo: localConsumo,
         };
-        localConsumo = '';
+        localConsumo = "";
         pb.collection("pedidos_pousada").create(data);
         console.log("pedido criado");
         alert("Pedido criado com sucesso");
@@ -61,7 +61,7 @@
         <h2 slot="header">Produto</h2>
         <BigCardProduto {produto} />
         <div class="local-consumo">
-            <h3>Onde deseja Consumir o Pedido</h3>
+            <h3>Onde vai ser consumido o Pedido</h3>
             <label>
                 <input
                     class="radio"
@@ -80,6 +80,15 @@
                 />
                 Quarto
             </label>
+            <label>
+                <input
+                    class="radio"
+                    type="radio"
+                    bind:group={localConsumo}
+                    value="Frigobar"
+                />
+                Frigobar
+            </label>
         </div>
         <button
             class="confirmar"
@@ -92,13 +101,30 @@
 {/if}
 
 <style>
-   .confirmar{
-         background-color: #2ecc71;
-         color: white;
-         border: none;
-         padding: 10px;
-         border-radius: 5px;
-         font-size: 1.2rem;
-         margin-top: 10px;
-   }
+    /** confirmar is centered*/
+    .confirmar {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        margin-top: 10px;
+
+        display: block;
+        margin: 0 auto;
+    }
+
+    .local-consumo {
+        padding-bottom: 15px;
+    }
+    
+    /**make the radio bigger*/
+    .radio {
+
+        transform: scale(1.5);
+        margin-right: 10px;
+    }
+
+
 </style>

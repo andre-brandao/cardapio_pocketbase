@@ -37,6 +37,7 @@
 
     .top-page button {
         font-size: 1em;
+        background-color: rgb(241, 86, 86);
     }
 
     dialog {

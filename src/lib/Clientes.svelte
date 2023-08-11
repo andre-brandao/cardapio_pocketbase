@@ -50,9 +50,8 @@
         >
         {#each clientes as cliente}
             <a href="/admin/infocliente/{cliente.id}">
-                <h3>{cliente.username}</h3>
-                <p>{cliente.unidade}</p>
-                <p>{cliente.observacao}</p>
+                <h3>{cliente.username}  {cliente.unidade}</h3>
+                <p>OBS: {cliente.observacao}</p>
             </a>
         {/each}
     </div>
@@ -74,7 +73,7 @@
 
 <style>
     .criar-cliente {
-        background-color: blue;
+        background-color: rgb(107, 107, 107);
     }
     .wrap-clientes {
         display: grid;
@@ -94,8 +93,9 @@
         font-size: 1em;
         font-weight: 500;
         font-family: inherit;
-        background-color: #3f007a;
+        background-color: #131313;
         cursor: pointer;
         transition: border-color 0.25s;
+        padding-left: 15px;
     }
 </style>
