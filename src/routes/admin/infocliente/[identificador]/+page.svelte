@@ -14,7 +14,7 @@
     let cliente: UsersResponse;
     let pedidos: any[] = [];
 
-    $:total = pedidos.reduce((acc, pedido) => {
+    $: total = pedidos.reduce((acc, pedido) => {
         return acc + pedido.preco;
     }, 0);
 
@@ -49,7 +49,7 @@
                 cliente: pedido.expand?.cliente.username,
                 status: pedido.status,
                 created: pedido.created,
-                local_consumo:pedido.local_consumo,
+                local_consumo: pedido.local_consumo,
             };
         });
         console.log(results);
@@ -60,51 +60,64 @@
         // cliente = await getCliente();
         pedidos = await getPedidosCliente();
     });
+
+    function deletarPedido(id: string) {
+        pb.collection("pedidos_pousada").delete(id);
+        pedidos = pedidos.filter((pedido) => pedido.id !== id);
+        console.log("pedido cancelado");
+    }
 </script>
 
 {#if cliente && pedidos.length > 0}
     <main>
         <div class="info-cliente">
             <h1>Cliente: {cliente.username}</h1>
-            <QrCodeLogin value={"http://localhost:5173/qrcode/"+cliente.username}/>
+            <QrCodeLogin
+                value={"http://localhost:5173/qrcode/" + cliente.username}
+            />
             <div class="flex">
-
                 <h2>Pedidos</h2>
                 <h2>Total: R${total.toFixed(2)}</h2>
-
             </div>
-            
-
         </div>
         <div class="wrap-pedidos">
             {#each pedidos ?? [] as pedido (pedido.id)}
                 <div class="pedido">
                     <!-- <p>Produto: {pedido.produto}</p> -->
                     <CardPedidos
-                    created={pedido.created}
-                    produto={pedido.produto}
-                    preco={pedido.preco}
-                    local_consumo={pedido.local_consumo}
+                        created={pedido.created}
+                        produto={pedido.produto}
+                        preco={pedido.preco}
+                        local_consumo={pedido.local_consumo}
                     />
+                    <button
+                        class="cancelar-pedido"
+                        on:click={() => deletarPedido(pedido.id)}
+                        >🗑️</button
+                    >
                 </div>
             {/each}
         </div>
     </main>
 {/if}
 
-
 <style>
+    .cancelar-pedido {
+        background-color: rgb(245, 80, 80);
+        margin: 10px;
+        padding: 10px;
+    }
 
-    .wrap-pedidos{
+    .wrap-pedidos {
         display: grid;
         gap: 1em;
     }
 
-    .pedido{
+    .pedido {
         background-color: rgb(143, 143, 143);
     }
 
-    .flex{
+    .flex {
         display: flex;
         justify-content: space-between;
     }

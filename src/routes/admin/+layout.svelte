@@ -5,6 +5,7 @@
 <nav>
 	<a href="/admin/pedidos"> Ultimos Pedidos</a>
 	<a href="/admin/comandas">Comandas</a>
+    <a href="/admin/produtos">Produtos</a>
 </nav>
 
 <slot/>
