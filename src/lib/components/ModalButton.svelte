@@ -28,7 +28,7 @@
         <slot />
 
         {#if button_text.length > 0}
-            <button class="confirmar"
+            <button
                 on:click={() => {
                     dispatch("confirm");
                     dialog.close();
@@ -42,23 +42,6 @@
 </dialog>
 
 <style>
-    /**center button*/
-    .confirmar{
-        margin: 7px auto;
-        display: block;
-        background-color: green;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        color: white;
-        font-weight: bold;
-
-
-
-    }
-
-
-
     /**make close button and the header side by side*/
     .top-page {
         display: flex;

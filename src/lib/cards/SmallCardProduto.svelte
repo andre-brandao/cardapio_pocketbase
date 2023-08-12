@@ -22,6 +22,9 @@
     <div class="miniatura">
         <p class="nome">{produto.nome}</p>
         <!-- <p class="descricao">{detalhes}</p> -->
+        {#if produto.vegano}
+             <img class="badge" src="/src/assets/vegan2.png" alt="">
+        {/if}
         <p class="preco">{produto.preco.toFixed(2)}</p>
     </div>
 </main>
@@ -34,6 +37,12 @@
     }
     main {
         display: flex;
+    }
+
+    .badge {
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
     }
 
     .miniatura {

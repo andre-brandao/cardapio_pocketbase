@@ -50,12 +50,13 @@ export type ProdutosPousadaRecord = {
 	subcategoria: string
 	categoria: string
 	nome: string
+	foto?: string
 	descricao?: string
 	quantidade?: number
 	preco: number
 	preco_para_dois?: number
-	em_estoque?: boolean
-	foto?: string
+	em_estoque: boolean
+	vegano: boolean
 }
 
 export type UsersRecord = {

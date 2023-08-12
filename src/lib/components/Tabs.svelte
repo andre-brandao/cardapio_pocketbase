@@ -3,8 +3,8 @@
 
     const dispatch = createEventDispatcher();
 
-    export let tabs = new Array;
-    export let activeTab = '';
+    export let tabs = new Array();
+    export let activeTab = "";
 </script>
 
 <div class="tabs">
@@ -12,21 +12,27 @@
         {#each tabs as tab}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-            <li on:click={() => dispatch("tabChange", tab)}>
-                <div class:active={tab === activeTab}>
-                    {tab}
-                </div>
+            <li
+                class:active={tab === activeTab}
+                on:click={() => dispatch("tabChange", tab)}
+            >
+                {tab}
             </li>
         {/each}
     </ul>
 </div>
 
 <style>
-    .tabs {
-        margin-bottom: 50x;
-    }
+    
+
+    /* .tabs{
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    } */
 
     ul {
+          border: 1px solid #ccc;
+        border-radius: 5px;
         display: flex;
         justify-content: center;
         padding: 0;
@@ -34,12 +40,16 @@
     }
 
     li {
-        margin: 0 16px;
+        margin: 0 10px;
         font-size: 18px;
         cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px 10px;
     }
     .active {
         /* color: #6D99CD; */
-        color: #ff0000;
+        /* color: #ff0000; */
+        background-color: #ccc;
     }
 </style>
