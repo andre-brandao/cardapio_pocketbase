@@ -4,6 +4,7 @@
     import { createEventDispatcher, onDestroy, onMount } from "svelte";
     import { currentUser, pb } from "../pocketbase";
     import type { ProdutosPousadaResponse } from "../pocketbase-types";
+    import CardProdutoAdmin from "./CardProdutoAdmin.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -61,7 +62,7 @@
                 class:fora_estoque={!produto.em_estoque}
                 on:click={() => dispatch("produto_selecionado", produto)}
             >
-                <SmallCardProduto {produto} />
+                <CardProdutoAdmin {produto} />
             </button>
         {/each}
         <!-- {#each categorias as categoria}

@@ -14,6 +14,8 @@
         descricao: "",
         preco: 0,
         imagem: "",
+        quantidade: 0,
+        vegano: false,
     };
 
     async function selecionar_produto(event: {
@@ -28,6 +30,8 @@
             descricao: produto.descricao,
             preco: produto.preco,
             imagem: "",
+            quantidade: produto.quantidade,
+            vegano: produto.vegano,
         };
         showModal = true;
     }
@@ -35,22 +39,23 @@
     let acao = "";
 
     async function editar_produto() {
-
         //update
         if (acao == "editar") {
             const id = produto.id;
-    
+
             pb.collection("produtos_pousada").update(id, {
                 subcategoria: input.subcategoria,
                 categoria: input.categoria,
                 nome: input.nome,
                 descricao: input.descricao,
                 preco: input.preco,
+                quantidade: input.quantidade,
+                vegano: input.vegano,
             });
             console.log("Produto editado com sucesso!");
             // alert("Produto editado com sucesso!");
 
-        //create
+            //create
         } else {
             const data = {
                 subcategoria: input.subcategoria,
@@ -58,12 +63,12 @@
                 nome: input.nome,
                 descricao: input.descricao,
                 preco: input.preco,
+                quantidade: input.quantidade,
+                vegano: input.vegano,
             };
             pb.collection("produtos_pousada").create(data);
             console.log("Produto criado com sucesso!");
-        
         }
-
     }
 
     function cadastrar_produto() {
@@ -75,6 +80,8 @@
             descricao: "",
             preco: 0,
             imagem: "",
+            quantidade: 0,
+            vegano: false,
         };
         showModal = true;
     }
@@ -105,12 +112,22 @@
             /> -->
         <div class="flex">
             <label for="preco">Preco R$</label>
-            <input id="preco" type="number" bind:value={input.preco} placeholder="Preço" />
+            <input
+                id="preco"
+                type="number"
+                bind:value={input.preco}
+                placeholder="Preço"
+            />
         </div>
 
         <div class="flex">
-            <label for="foto">Imagem  </label>
-            <input id="foto" type="file" bind:value={input.imagem} placeholder="Imagem" />
+            <label for="foto">Imagem </label>
+            <input
+                id="foto"
+                type="file"
+                bind:value={input.imagem}
+                placeholder="Imagem"
+            />
         </div>
         <input
             type="text"
@@ -122,6 +139,23 @@
             bind:value={input.subcategoria}
             placeholder="Comida ou Bebida"
         />
+        <div class="flex">
+            <label for="vegano">Vegano</label>
+            <input
+                id="vegano"
+                type="checkbox"
+                bind:checked={input.vegano}
+                placeholder="Vegano"
+            />
+        <div class="flex">
+            <label for="quandtidade">Em estoque:</label>
+            <input
+                id="quantidade"
+                type="number"
+                bind:value={input.quantidade}
+                placeholder="Quantidade"
+            />
+        </div>
     </div>
 </Modal>
 
@@ -137,7 +171,7 @@
         gap: 1rem;
     }
     /**centered button*/
-    input{
+    input {
         font-size: 15px;
     }
 </style>
