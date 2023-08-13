@@ -1,5 +1,5 @@
 <script lang="ts">
-    import CardPedidos from "$lib/cards/CardPedidos.svelte";
+    import CardPedidos from "$lib/admin/CardPedidosAdmin.svelte";
     import { pb } from "$lib/pocketbase";
     import type {
         UsersResponse,

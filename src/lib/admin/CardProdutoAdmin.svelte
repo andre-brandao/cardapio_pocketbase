@@ -36,11 +36,7 @@
         display: flex;
     }
 
-    .badge {
-        width: 40px;
-        height: 40px;
-        margin-left: 10px;
-    }
+   
 
     .miniatura {
         width: 40%;
@@ -51,11 +47,5 @@
     .nome {
         font-size: 20px;
         font-weight: bold;
-    }
-    /**preco to the bottom right*/
-    .preco {
-        text-align: right;
-
-        font-size: 20px;
     }
 </style>

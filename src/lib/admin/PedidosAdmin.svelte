@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher, onDestroy, onMount } from "svelte";
     import { currentUser, pb } from "../pocketbase";
-    import CardPedidos from "../cards/CardPedidos.svelte";
+    import CardPedidos from "./CardPedidosAdmin.svelte";
 
     export let cliente = "";
 

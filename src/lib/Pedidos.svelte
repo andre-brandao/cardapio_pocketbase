@@ -3,7 +3,7 @@
     import { currentUser, pb } from "./pocketbase";
     import CardPedidos from "./cards/CardPedidos.svelte";
 
-    export let cliente = "";
+    let cliente = "";
 
     const dispatch = createEventDispatcher();
 
@@ -12,29 +12,24 @@
     //@ts-ignore
     produto: any; 
     //@ts-ignore
-    cliente: any; status: any; created: string; }[]}
+    cliente: any; status: any; local_consumo: any; created: string; 
+    //@ts-ignore
+    preco: any; }[]}
      */
     let pedidos = [];
 
     async function getPedidos() {
         const date = new Date().toISOString().split("T")[0] + " 00:00:00";
         let response;
-        if (cliente.length === 0) {
+        // @ts-ignore
+        const cliente = $currentUser.id
+
+        response = await pb.collection("pedidos_pousada").getFullList(300, {
             // @ts-ignore
-            response = await pb.collection("pedidos_pousada").getFullList(300, {
-                // @ts-ignore
-                filter: ` created >= "${date}"`,
-                expand: "cliente, produto",
-                sort: "-created",
-            });
-        } else {
-            response = await pb.collection("pedidos_pousada").getFullList(300, {
-                // @ts-ignore
-                filter: `cliente = "${cliente}" && created >= "${date}"`,
-                expand: "cliente, produto",
-                sort: "-created",
-            });
-        }
+            filter: `cliente = "${cliente}" && created >= "${date}"`,
+            expand: "cliente, produto",
+            sort: "-created",
+        });
 
         const results = response.map((pedido) => {
             return {
@@ -46,6 +41,8 @@
                 status: pedido.status,
                 local_consumo: pedido.local_consumo,
                 created: pedido.created,
+                //@ts-ignore
+                preco: pedido.expand?.produto.preco,
             };
         });
 
@@ -53,6 +50,7 @@
     }
 
     onMount(async () => {
+        // @ts-ignore
         pb.collection("pedidos_pousada").subscribe("*", async (e) => {
             pedidos = await getPedidos();
         });
@@ -78,6 +76,8 @@
                     cliente={pedido.cliente}
                     status={pedido.status}
                     created={pedido.created}
+                    preco={pedido.preco}
+                    local_consumo={pedido.local_consumo}
                 />
             </button>
         {/each}

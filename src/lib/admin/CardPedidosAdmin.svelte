@@ -19,17 +19,22 @@
     </div>
     <div class="flex">
         <h3 class="produto">{produto}</h3>
-            <h3>R${preco.toFixed(2)}</h3>
+
+        {#if preco != 0}
+        <h3>R${preco.toFixed(2)}</h3>
+        {/if}
+        
     </div>
     <h3>Local Consumo: {local_consumo}</h3>
     <h1 class={status}>{status}</h1>
 </main>
 
 <style>
-    h3 {
+
+    h3{
         margin: 10px 0px;
     }
-    .produto {
+    .produto{
         font-size: 30px;
     }
     .flex {

@@ -31,4 +31,4 @@
 </script>
 
 
-<Pedidos cliente={cliente} on:pedido_selecionado={selecionar_pedido}/>
+<Pedidos on:pedido_selecionado={selecionar_pedido}/>

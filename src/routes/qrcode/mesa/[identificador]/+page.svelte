@@ -28,7 +28,7 @@
     <div class="wrap">
         <a class="cardapio" href="/cardapio">Cardapio</a>
         {#each comandas as comanda}
-            <a href="/qrcode/comanda/{comanda.username}">{comanda.username}</a>
+            <a href="/qrcode/autenticado/comanda/{comanda.username}">{comanda.username}</a>
         {/each}
     </div>
 </main>
