@@ -23,15 +23,13 @@
 </div>
 
 <style>
-    
-
     /* .tabs{
         border: 1px solid #ccc;
         border-radius: 5px;
     } */
 
     ul {
-          border: 1px solid #ccc;
+        /* border: 1px solid #ccc; */
         border-radius: 5px;
         display: flex;
         justify-content: center;
@@ -46,6 +44,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 5px 10px;
+        box-shadow: black -1px 2px 7px;
     }
     .active {
         /* color: #6D99CD; */

@@ -1,10 +1,27 @@
 <script lang="ts">
     import { createEventDispatcher, onDestroy, onMount } from "svelte";
-    import { currentUser, pb } from "./pocketbase";
-    import type { UsersResponse } from "./pocketbase-types";
-    import Modal from "./components/Modal.svelte";
+    import { currentUser, pb } from "../pocketbase";
+    import type { UsersResponse } from "../pocketbase-types";
+    import Modal from "../components/Modal.svelte";
 
     let clientes: UsersResponse[] = [];
+
+    let filtroPesquisa = "";
+
+    $: clientesFiltrados = clientes.filter((cliente) => {
+        //filtro unidade
+        if (
+            cliente.unidade
+                .toLocaleLowerCase()
+                .includes(filtroPesquisa.toLowerCase())
+        ) {
+            return true;
+        }
+        //filtro nome
+        return cliente.username
+            .toLowerCase()
+            .includes(filtroPesquisa.toLowerCase());
+    });
 
     async function getClientes() {
         const response = await pb
@@ -43,14 +60,18 @@
 </script>
 
 <main>
+    <div class="pesquisa">
+        <label for="busca">Pesquisar</label>
+        <input id="busca" type="text" bind:value={filtroPesquisa}>
+    </div>
     <div class="wrap-clientes">
         <button
             on:click={() => (showModalCriarCliente = true)}
             class="criar-cliente">Nova Comanda</button
         >
-        {#each clientes as cliente}
+        {#each clientesFiltrados as cliente}
             <a href="/admin/infocliente/{cliente.id}">
-                <h3>{cliente.username}  {cliente.unidade}</h3>
+                <h3>{cliente.username} {cliente.unidade}</h3>
                 <p>OBS: {cliente.observacao}</p>
             </a>
         {/each}
@@ -72,6 +93,9 @@
 </Modal>
 
 <style>
+    .pesquisa{
+        padding: 1rem;
+    }
     .criar-cliente {
         background-color: rgb(107, 107, 107);
         min-height: 55px;
@@ -81,7 +105,7 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1rem;
     }
-    .flex{
+    .flex {
         display: flex;
         flex-direction: column;
         gap: 1rem;

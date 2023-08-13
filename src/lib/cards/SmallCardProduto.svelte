@@ -7,14 +7,14 @@
 
 <main>
     {#if produto.foto.length > 0}
-        <img
+        <img class="foto-produto"
             src={pb.files.getUrl(produto, produto.foto, {
                 thumb: "250x250f",
             })}
             alt=""
         />
     {:else}
-        <img src={"/src/assets/no_image.jpg"} alt="" />
+        <img class="foto-produto" src={"/src/assets/no_image.jpg"} alt="" />
     {/if}
 
     <!-- miniatura -->
@@ -30,10 +30,15 @@
 </main>
 
 <style>
-    img {
+    /**crop the image to a square that fits perfectly on the left*/
+    .foto-produto {
+
         width: 50%;
         aspect-ratio: 1/1;
         border-radius: 10px;
+
+        margin: -5px;
+        /* border: 5px solid gray; */
     }
     main {
         display: flex;

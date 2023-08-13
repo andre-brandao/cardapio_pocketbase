@@ -71,7 +71,7 @@
                 <h2 class="nome-categoria">{categoria}</h2>
                 <div class="wrap-produto">
                     {#each getArrayCategoria(categoria) as produto}
-                        <button
+                        <button class="produto"
                             class:fora_estoque={!produto.em_estoque}
                             on:click={() =>
                                 dispatch("produto_selecionado", produto)}
@@ -86,6 +86,14 @@
 </main>
 
 <style>
+    /**tabs is fixed when you scroll*/
+    .tabs {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: rgb(255, 255, 255);
+        padding: 1px;
+    }
     .nome-categoria {
         text-align: center;
         font-size: 30px;
@@ -102,10 +110,9 @@
     }
 
     .cardapio {
-        overflow-y: scroll;
+        /* overflow-y: scroll; */
         display: flex;
         flex-direction: column;
     }
-
 
 </style>

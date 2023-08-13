@@ -11,8 +11,11 @@
         //@ts-ignore
         produto: any;
         //@ts-ignore
-        cliente: any; status: any; created: string; local_consumo: string;
-    }[]= [];
+        cliente: any;
+        status: any;
+        created: string;
+        local_consumo: string;
+    }[] = [];
 
     async function getPedidos() {
         const date = new Date().toISOString().split("T")[0] + " 00:00:00";
@@ -35,8 +38,6 @@
         }
 
         const results = response.map((pedido) => {
-
-
             return {
                 id: pedido.id,
                 //@ts-ignore
@@ -45,7 +46,7 @@
                 cliente: pedido.expand?.cliente.username,
                 //@ts-ignore
                 unidade: pedido.expand?.cliente.unidade,
-                
+
                 status: pedido.status,
                 created: pedido.created,
                 local_consumo: pedido.local_consumo,
@@ -100,22 +101,24 @@
                     created={pedido.created}
                     local_consumo={pedido.local_consumo}
                 />
-                <button
-                    class="confirmar"
-                    on:click={() => confirmarPedido(pedido.id)}>✅</button
-                >
-                <button
-                    class="em-preparo"
-                    on:click={() => emPreparoPedido(pedido.id)}>🍲</button
-                >
-                <button
-                    class="cancelar"
-                    on:click={() => cancelarPedido(pedido.id)}>❌</button
-                >
-                <button
-                    class="deletar"
-                    on:click={() => deletarPedido(pedido.id)}>🗑️</button
-                >
+                <div class="wrap-button">
+                    <button
+                        class="confirmar but"
+                        on:click={() => confirmarPedido(pedido.id)}>✅</button
+                    >
+                    <button
+                        class="em-preparo but"
+                        on:click={() => emPreparoPedido(pedido.id)}>🍲</button
+                    >
+                    <button
+                        class="cancelar but"
+                        on:click={() => cancelarPedido(pedido.id)}>❌</button
+                    >
+                    <button
+                        class="deletar but"
+                        on:click={() => deletarPedido(pedido.id)}>🗑️</button
+                    >
+                </div>
             </div>
         {/each}
     </div>
@@ -139,7 +142,16 @@
         padding: 0px 0px 20px 20px;
     }
 
-    .pedido > button {
+    .wrap-button{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .but {
+        /* border: none; */
+        /* background-color: transparent; */
+        cursor: pointer;
         font-size: 30px;
+        
     }
 </style>

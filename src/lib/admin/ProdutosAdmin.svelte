@@ -10,6 +10,14 @@
 
     let produtos: ProdutosPousadaResponse[] = [];
 
+    let filtroProdutos = "";
+
+    $: produtosFiltrados = produtos.filter((produto) => {
+        return produto.nome
+            .toLowerCase()
+            .includes(filtroProdutos.toLowerCase());
+    });
+
     async function getProdutos() {
         const response = await pb
             .collection("produtos_pousada")
@@ -50,6 +58,10 @@
 </script>
 
 <main>
+    <div class="flex pesquisar">
+        <label for="busca">Pesquisar:</label>
+        <input id="busca" type="text" bind:value={filtroProdutos}>
+    </div>
     <div class="wrap-produto">
         <button
             class="novo-produto"
@@ -57,7 +69,7 @@
         >
             Cadastrar Novo Produto
         </button>
-        {#each produtos as produto}
+        {#each produtosFiltrados as produto}
             <button
                 class:fora_estoque={!produto.em_estoque}
                 on:click={() => dispatch("produto_selecionado", produto)}
@@ -76,6 +88,9 @@
 </main>
 
 <style>
+    .pesquisar{
+        margin-bottom: 1em;
+    }
     .fora_estoque {
         /* opacity: 0.1; */
         background-color: rgb(236, 121, 121);

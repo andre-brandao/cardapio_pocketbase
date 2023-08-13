@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Clientes from "$lib/Clientes.svelte";
+    import Clientes from "$lib/admin/ComandasAdmin.svelte";
 
 
 
